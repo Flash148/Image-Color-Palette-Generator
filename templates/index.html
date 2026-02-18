@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Color Palette Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Image Color Palette Generator</h1>
+        <p>Upload an image and discover its dominant colors</p>
+
+        <form action="/extract" method="post" enctype="multipart/form-data" class="upload-form">
+            <div class="form-group">
+                <label for="image">Choose an image:</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <label for="num_colors">Number of colors to extract:</label>
+                <input type="number" id="num_colors" name="num_colors" min="2" max="10" value="5" required>
+            </div>
+
+            <button type="submit">Extract Colors ✨</button>
+        </form>
+    </div>
+</body>
+</html>
