@@ -11,7 +11,7 @@
         <h1>🎨 Color Palette Extracted!</h1>
         
         <div class="uploaded-image">
-            <img src="{{ url_for('static', filename='uploads/' + image_path.split('/')[-1]) }}" alt="Uploaded Image">
+            <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
         </div>
 
         <h2>Dominant Colors</h2>
@@ -19,9 +19,10 @@
         <div class="color-grid">
             {% for color in colors %}
             <div class="color-card">
-                <div class="color-swatch" style="background-color: {{ color.hex }};"></div>
+                <div class="color-swatch" style="background-color: {{ color.hex }}"></div>
                 <div class="color-info">
-                    <p class="hex-code">{{ color.hex }}</p>
+                    <p class="hex-code" onclick="copyToClipboard('{{ color.hex }}')">{{ color.hex }}
+                    <span class="copy-hint"> Click to copy</span></p>
                     <p class="rgb-code">RGB{{ color.rgb }}</p>
                     <p class="percentage">{{ "%.2f"|format(color.percentage) }}%</p>
                 </div>
@@ -33,5 +34,31 @@
             <a href="/" class="back-link">← Upload Another Image</a>
         </div>
     </div>
+    <script>
+        function copyToClipboard(hexCode) {
+            // copy to clipboard
+            navigator.clipboard.writeText(hexCode).then(function() {
+                //show success feedback
+                showCopiedFeedback(hexCode);
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+                alert('Copied: ' + hexCode);
+            });
+        }
+        function showCopiedFeedback(hexCode) {
+            // create feedback element
+            const feedback = document.createElement('div');
+            feedback.className = 'copy-feedback';
+            feedback.textContent = `Copied ${hexCode}!`;
+
+            //add to page
+            document.body.appendChild(feedback);
+
+            //remove after 2 seconds
+            setTimeout(function() {
+                document.body.removeChild(feedback);
+            }, 2000);
+        }
+    </script>
 </body>
 </html>

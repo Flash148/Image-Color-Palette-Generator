@@ -21,7 +21,14 @@ def extract():
 
     #save file to temporary location
     filepath = os.path.join('static/uploads', file.filename)
+    print(f"DEBUG: File saved to {filepath}") #DEBUG statement to confirm file saving
+    print(f"DEBUG: Absolute path: {os.path.abspath(filepath)}") #DEBUG statement to show absolute path
+
     file.save(filepath)
+
+    print(f"DEBUG: File exists after save? {os.path.exists(filepath)}") #DEBUG statement to confirm file existence after saving
+    print(f"DEBUG: Files in uploads dir: {os.listdir('static/uploads')}") #DEBUG statement to list files in uploads directory
+
 
     #extract colors 
     image_array = load_image(filepath)
@@ -36,7 +43,7 @@ def extract():
             'percentage': percentages[i] * 100 #convert to percentage
         })
 
-    return render_template('result.html', colors=color_data, image_path=filepath)
+    return render_template('result.html', colors=color_data, filename=file.filename)
 
 
 
